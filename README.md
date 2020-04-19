@@ -1,2 +1,2 @@
-# simpleftp
-Skeleton for socket programming lectures
+# Trabajo Practico Redes
+Integrantes: Camilo Jimenez, Felipe Sagarraga, Santiago Rotman, Juan S Valero
