@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include <string.h>
 #include <stdbool.h>
@@ -187,16 +188,28 @@ void operate(int sd) {
  * Run with
  *         ./mysrv <SERVER_PORT>
  **/
-int main (int argc, char *argv[]) {
-    int i = 0;
-    char *token;
-    // arguments checking
-    for (i = 0; i < argc; i++){
-        printf("%s\n", argv[i]);
+int validate_number(char *str) {
+    while (*str) {
+       if(!isdigit(*str)){ //if the character is not a number, return false
+          return 0;
+       }
+       str++; //point to next character
     }
+    return 1;
+ }
 
-    token = strtok(str, s);
-    while( token != null)
+ int validate_port(char *port){
+   int num;
+   if (!validate_number(port)) //si no son todos numeros
+       return 0; //es falso
+   num = atoi(port); //Paso los caracteres char a int
+   if (num >= 1024 && num <= 65535) return 1; //si esta en el rango devuelvo true si no false
+   else return 0;
+ }
+int main (int argc, char *argv[]) {
+
+    // arguments checking
+    validate_port(argv[1]) ? printf("Puerto Valida \n") : printf("No anda brou\n");
     // reserve sockets and variables space
 
     // create server socket and check errors
@@ -208,8 +221,8 @@ int main (int argc, char *argv[]) {
     // main loop
     while (true) {
         // accept connectiones sequentially and check errors
-        break;
-        // send hello%s
+    break;
+        // send hello
 
         // operate only if authenticate is true
     }
