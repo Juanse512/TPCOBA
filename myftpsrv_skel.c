@@ -124,16 +124,31 @@ bool check_credentials(char *user, char *pass) {
     char *path = "./ftpusers", *line = NULL, cred[100];
     size_t len = 0;
     bool found = false;
-
-    // make the credential string
+    int ret, i=0;
 
     // check if ftpusers file it's present
+    file = fopen("ftpusers", "r");
+    if (!file) {
+        printf("Failed to open a file\n");
+        return 1;
+    }
 
-    // search for credential string
+    // make the credential string
+		strcat(user, ":");
+		strcat(user, pass);
 
+		// search for credential string
+    while (1) {
+        ret = fscanf(file, "%s",cred);
+        if (ret == EOF)
+            break;
+        if(strcmp(cred, user) == 0) found = true;
+    }
     // close file and release any pointes if necessary
-
+    fclose(file);
     // return search status
+		return found;
+
 }
 
 /**
@@ -143,6 +158,7 @@ bool check_credentials(char *user, char *pass) {
  **/
 bool authenticate(int sd) {
     char user[PARSIZE], pass[PARSIZE];
+    //vos aca recibis la info
 
     // wait to receive USER action
 
@@ -211,7 +227,7 @@ int main (int argc, char *argv[]) {
     // arguments checking
     validate_port(argv[1]) ? printf("Puerto Valida \n") : printf("No anda brou\n");
     // reserve sockets and variables space
-
+  
     // create server socket and check errors
 
     // bind master socket and check errors
@@ -225,6 +241,7 @@ int main (int argc, char *argv[]) {
         // send hello
 
         // operate only if authenticate is true
+
     }
 
     // close server socket
